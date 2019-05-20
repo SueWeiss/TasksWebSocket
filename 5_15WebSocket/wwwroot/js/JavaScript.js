@@ -6,6 +6,7 @@
     $("#add").on('click', function () { 
         const task = $("#task").val();
         connection.invoke("addtask", task);
+        $("#task").val('');
        
     });
     connection.on("NewTask", newtask => {

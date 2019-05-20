@@ -32,6 +32,7 @@ namespace _5_18WebSocket.Data
                 if (item == null)
                 { return td; }
                 item.Status = ToDoStatus.InProgress;
+                item.UserNameAssigned = td.UserNameAssigned;
                 context.SaveChanges();
                 // context.Database.ExecuteSqlCommand(
                 //   "UPDATE TasksWebSocket set status= @status, UserNameAssigned=@user where id = @id",
