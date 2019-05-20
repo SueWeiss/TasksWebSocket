@@ -13,6 +13,7 @@ namespace _5_15WebSocket
 {
     public class Startup
     {
+        public const string CookieScheme = "YourSchemeName";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,15 +24,17 @@ namespace _5_15WebSocket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services.AddSession();
+            services.AddAuthentication(CookieScheme)
+                 .AddCookie(CookieScheme, options =>
+                 {
+                     options.AccessDeniedPath = "/account/denied";
+                     options.LoginPath = "/account/login";
+                 });
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,9 +49,14 @@ namespace _5_15WebSocket
                 app.UseExceptionHandler("/Home/Error");
             }
 
+          
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<TaskHub>("/taskHub");
+            });
+            app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

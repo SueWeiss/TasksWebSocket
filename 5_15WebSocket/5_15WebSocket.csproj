@@ -5,8 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="TaskHub.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\5_18WebSocket.Data\5_18WebSocket.Data.csproj" />
   </ItemGroup>
 
 </Project>
