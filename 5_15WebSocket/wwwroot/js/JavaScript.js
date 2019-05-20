@@ -15,26 +15,26 @@
           <td> <button class="btn btn-success assign" id="${newtask.id}-assign" data-id="${newtask.id} ">Assign to self</button></td></tr>` )        
     });
 
-///
+//
     $('#task-table').on('click', '.assign', function () {
-        const chore = {
+        const task = {
             id: $(this).data('id'),
             userNameAssigned: $('#userEmail').val()  
         };
-        connection.invoke('AcceptTask', chore )
+        connection.invoke('AcceptTask', task )
     });
 
-    connection.on('AcceptedTask', chore => {
-        $(`#${chore.id}-task-row`).find('td:eq(1)').html(`<td><button class="btn btn-danger" disabled> ${chore.userAssigned} is doing task</button></td>`);
+    connection.on('AcceptedTask', task => {
+        $(`#${task.id}-task-row`).find('td:eq(1)').html(`<td><button class="btn btn-danger" disabled> ${task.userNameAssigned} is doing task</button></td>`);
 
     });
-    connection.on('IAcceptedTask', chore => {
-     console.log('accepted chore');
-    $(`#${chore.id}-task-row`).find('td:eq(1)').html(`<td><button class="btn btn-info done" data-id= ${chore.id}>Done!</button></td>`);
+    connection.on('IAcceptedTask', task => {
+        console.log(task);
+        $(`#${task.id}-task-row`).find('td:eq(1)').html(`<td><button class="btn btn-info done" data-id= ${task.id}>Done!</button></td>`);
 
     });
 
-///
+//
     
    
 
