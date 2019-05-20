@@ -48,10 +48,11 @@
     });
 
 
-    ///$('task-table').on('click', '.assign', function () {
+ ///
+   $('task-table').on('click', '.assign', function () {
     const taskId = $(this).data('id');
     connection.invoke("TaskAssigned", taskId);
-});
+   });
 
 connection.on("Assigned", updateTask => {
     console.log(updateTask)
@@ -64,5 +65,4 @@ connection.on("IAssigned", updateTask => {
     $(`#${updateTask.id}-task-row`).append(`<td><button class="btn btn-danger done" data-id="${updateTask.id}"> Done!</button></td>`),
         $(`${updateTask.id}-assign`).attr("disabled", true);
 });////
-
 });

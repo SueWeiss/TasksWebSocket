@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _5_18WebSocket.Data
 {
-   public class Manager
+    public class Manager
     {
         string _connectionString { get; set; }
         public Manager(string connectionString)
@@ -19,29 +19,28 @@ namespace _5_18WebSocket.Data
         {
             using (var context = new ToDoContext(_connectionString))
             {
-          context.Tasks.Add(item);
+                context.Tasks.Add(item);
                 context.SaveChanges();
             }
-
         }
+
         public ToDo TaskAssigned(ToDo td)
         {
             using (var context = new ToDoContext(_connectionString))
             {
-               ToDo item= context.Tasks.FirstOrDefault(t => t.Id == td.Id);
+                ToDo item = context.Tasks.FirstOrDefault(t => t.Id == td.Id);
                 if (item == null)
                 { return td; }
-                    item.Status = ToDoStatus.InProgress;
+                item.Status = ToDoStatus.InProgress;
                 context.SaveChanges();
-               // context.Database.ExecuteSqlCommand(
-                //    "UPDATE TasksWebSocket set status= @status, UserNameAssigned=@user where id = @id",
-                //      new SqlParameter("@id", td.Id), new SqlParameter("@user", td.UserNameAssigned),
-                //      new SqlParameter("@status", td.Status)
-                 //   );
+                // context.Database.ExecuteSqlCommand(
+                //   "UPDATE TasksWebSocket set status= @status, UserNameAssigned=@user where id = @id",
+                //    new SqlParameter("@id", td.Id), new SqlParameter("@user", td.UserNameAssigned), new SqlParameter("@status", td.Status));
+                 
                 return item;
             }
         }
-        public void TaskCompleted(int taskID, string userName)
+        public void TaskCompleted(int taskID)
         {
             using (var context = new ToDoContext(_connectionString))
             {
@@ -50,30 +49,27 @@ namespace _5_18WebSocket.Data
                 { return; }
                 item.Status = ToDoStatus.Done;
                 context.SaveChanges();
-
-
-             //   context.Database.ExecuteSqlCommand(
-             //       "UPDATE TasksWebSocket set status= 'InProgress', UserName'@user' where id = @taskid",
-             //         new SqlParameter("@id", taskID), new SqlParameter("@user", userName)
-              //      );
-                // return context.Questions.ToList().OrderByDescending(d => d.DatePosted);
+                
+                //   context.Database.ExecuteSqlCommand(
+                //       "UPDATE TasksWebSocket set status= 'InProgress', UserName'@user' where id = @taskid",
+                //         new SqlParameter("@id", taskID), new SqlParameter("@user", userName));
             }
         }
-      
-       
+
+
         public ToDo GetTaskById(int Id)
         {
             using (var context = new ToDoContext(_connectionString))
             {
-              return context.Tasks.Include(q => q.UserNameAssigned).FirstOrDefault(q => q.Id == Id);
+                return context.Tasks.Include(q => q.UserNameAssigned).FirstOrDefault(q => q.Id == Id);
             }
         }
-               
-       public IEnumerable<ToDo> GetAllIncompletedTasks()
+
+        public IEnumerable<ToDo> GetAllIncompletedTasks()
         {
             using (var context = new ToDoContext(_connectionString))
             {
-                return context.Tasks.Where(t=>t.Status==ToDoStatus.Raw).ToList();
+                return context.Tasks.Where(t => t.Status == ToDoStatus.Raw).ToList();
             }
         }
 

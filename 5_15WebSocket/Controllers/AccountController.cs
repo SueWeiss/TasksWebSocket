@@ -21,6 +21,7 @@ namespace _5_15WebSocket.Controllers
             _connectionString = configuration.GetConnectionString("ConStr");
             _mgr = new Manager(_connectionString);
         }
+
         public IActionResult Index()
         {
             return View();

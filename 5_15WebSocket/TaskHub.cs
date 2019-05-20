@@ -29,19 +29,19 @@ public class TaskHub : Hub
         Clients.All.SendAsync("NewTask", ToDo);
     }
 
-    public void TaskAssigned(int taskId)
-    {
-        ToDo c = new ToDo
-        {
-            Id = taskId,
-            UserNameAssigned = Context.User.Identity.Name,
-            Status = ToDoStatus.InProgress,
-        };
+    //public void TaskAssigned(int taskId)
+    //{
+    //    ToDo c = new ToDo
+    //    {
+    //        Id = taskId,
+    //        UserNameAssigned = Context.User.Identity.Name,
+    //        Status = ToDoStatus.InProgress,
+    //    };
 
-        ToDo udpated = _mgr.TaskAssigned(c);
-        Clients.Others.SendAsync("Assigned", udpated);
-        Clients.Caller.SendAsync("IAssigned", udpated);
-    }
+    //    ToDo udpated = _mgr.TaskAssigned(c);
+    //    Clients.Others.SendAsync("Assigned", udpated);
+    //    Clients.Caller.SendAsync("IAssigned", udpated);
+    //}
 
     public void AcceptTask(ToDo task)
     {
