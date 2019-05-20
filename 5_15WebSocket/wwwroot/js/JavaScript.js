@@ -34,22 +34,7 @@
     });
 
 ///
-    $('task-table').on('click', '.assign', function () {
-        const taskId= $(this).data('id');
-        connection.invoke("TaskAssigned", taskId );
-          });
-
-    connection.on("Assigned", updateTask => {
-        console.log(updateTask)
-        $(`#${updateTask.id}-task-row`).append(`<td>${updateTask.userAssigned} is doing this task</td>`),
-            $(`${updateTask.id}-assign`).attr("disabled", true);
-    });
-
-    connection.on("IAssigned", updateTask => {
-        console.log(updateTask)
-        $(`#${updateTask.id}-task-row`).append(`<td><button class="btn btn-danger done" data-id="${updateTask.id}"> Done!</button></td>`),
-            $(`${updateTask.id}-assign`).attr("disabled", true);
-    });
+    
    
 
     $('#task-table').on('click', '.done', function () {
@@ -62,11 +47,22 @@
 
     });
 
-    // connection.start().then(() => {
-   //     connection.invoke("NewUser");
-   // });
-    //connection.on("NewCount", count => {
-    //    $("#count").text(count.count);
-   // });
+
+    ///$('task-table').on('click', '.assign', function () {
+    const taskId = $(this).data('id');
+    connection.invoke("TaskAssigned", taskId);
+});
+
+connection.on("Assigned", updateTask => {
+    console.log(updateTask)
+    $(`#${updateTask.id}-task-row`).append(`<td>${updateTask.userAssigned} is doing this task</td>`),
+        $(`${updateTask.id}-assign`).attr("disabled", true);
+});
+
+connection.on("IAssigned", updateTask => {
+    console.log(updateTask)
+    $(`#${updateTask.id}-task-row`).append(`<td><button class="btn btn-danger done" data-id="${updateTask.id}"> Done!</button></td>`),
+        $(`${updateTask.id}-assign`).attr("disabled", true);
+});////
 
 });
